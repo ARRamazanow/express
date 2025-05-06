@@ -1,16 +1,17 @@
 import express from 'express';
-import { pageHome } from './pages/home.js';
-import { pageAbout } from './pages/about.js';
-import { pageUser } from './pages/user.js';
 import { page404 } from './pages/404.js';
+import { pageRouter } from './router/pageRouter.js';
+import { apiRouter } from './router/apiRouter.js';
+
 const app = express();
 const port = 3000;
 
 app.use(express.static('public'));
+app.use(express.json());
 
-app.get('/', pageHome);
-app.get('/about', pageAbout);
-app.get('/users/:userId', pageUser);
+app.use('/', pageRouter);
+app.use('/', apiRouter);
+
 app.get('*error', page404);
 
 app.listen(port, () => {
